@@ -1,0 +1,34 @@
+import("methods")
+import("Category")
+
+importFrom("graphics", "plot", "lines", "hist")
+importFrom("annotate", "getGOTerm")
+
+export(graphTheory,
+       overlap,
+       complexStatus,
+       buildFDMat,
+       getFDgene,
+       reduceM,
+       densityEstimate,
+       truncName,
+       getDescr,
+       KEGG2SCISI,
+       ppiInteract)
+
+exportClasses("CoHyperGParams",
+              "CoHyperGResult",
+              "testResult",
+              "deResult",
+              "gtResult")
+
+exportMethods("hyperGTest",
+              "summary",
+              "geneCounts",
+              "universeCounts",
+              "pvalues",
+              "oddsRatios",
+              "expectedCounts",
+              "universeBuilder",
+              "categoryToEntrezBuilder",
+              "plot")

@@ -1,0 +1,297 @@
+
+%\VignetteIndexEntry{PCpheno Vignette}
+%\VignetteDepends{}
+%\VignetteKeywords{Phenotype}
+%\VignettePackage{PCpheno}
+\documentclass[11pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref} 
+\usepackage[authoryear,round]{natbib} 
+\usepackage{times}
+\usepackage[small]{caption}
+\usepackage{array}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rmethod}[1]{{\texttt{#1}}}
+\newcommand{\Rclass}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+
+\title{PCpheno: assessing the role cellular organizational units in determining
+  phenotype} 
+\author{\small{Nolwenn Le Meur and Robert Gentleman}}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+We propose computational methods and statistical paradigms to explore
+the relationships between phenotypic data and cellular organizational
+units, such as multi-protein complexes or pathways. Indeed, while
+proteins are often the primary unit used by cells to carry out the
+many different functions that the cell requires for life, they seldom
+accomplish important tasks alone, but rather assemble into
+organizational units. Recent studies suggest that some control of
+phenotype can be usefully attributed to multi-protein complexes rather
+than genes \citep{Deutschbauer2005a, Spirin2006} and hence may help
+provide elucidation of the underlying roles or mechanisms that
+directly control changes in phenotype.
+
+\section{Data sources}
+In this package, we currently present yeast phenotypic datasets and
+use of the yeast cellular organizational units defined in the
+Bioconductor package \textit{ScISI} package and the KEGG pathways
+listed in the \textit{org.Sc.sgd.db} package (formerly the \textit{YEAST} package).\\
+
+Nevertheless our methods can easily be applied to other species and other
+estimates of organizational units within the genome, or proteome, and
+in no way rely on the particular choices we have made here.
+
+\subsection{Phenotypic data}
+We currently propose 7 Yeast phenotypic datasets, downloaded from the
+the literature and the \textit{Saccharomyces Genome Database}
+(\href{http://www.yeastgenome.org/}{http://www.yeastgenome.org/}).
+
+\begin{itemize}
+\item \cite{Giaever2002} collection of single gene-deletion mutants under 6 different experimental conditions.
+\item \cite{Dudley2005} collection of single gene-deletion mutants under 21 different experimental conditions.
+\item \cite{Deutschbauer2005a} collection of haploinsufficient genes.
+\item \cite{Lesage2005} network of genetic interactions.
+\item \cite{Kastenmayer2005} collection single gene-deletion mutants under 5 different experimental conditions.
+\item \cite{Osterberg2006} collection of overexpression ~600 C-terminal tagged integral membrane under 4 different experimental conditions.
+\item  \cite{SGD} list of phenotypes and associated genes from several published experiments.
+\end{itemize}
+
+While our approach focuses on understanding the functional roles that
+underly phenotypic changes when manipulating single genes, we hope
+that these methods will also form the basis for the analysis of more
+complex gene manipulation experiments.\newline
+
+To illustrate this vignette, we will use the data by \cite{Dudley2005}.
+
+<<load library>>=
+library(PCpheno)
+data(DudleyPhenoM)
+##Number of genes sensitive at each condition
+colSums(DudleyPhenoM)
+##Retrieve the name of the sensitive genes in each condition
+DudleyPhenoL <- apply(DudleyPhenoM,2,function(x) names(which(x==1)))
+DudleyPhenoL[1]
+@
+
+\subsection{Cellular organizational units}
+As previously mentioned, here we are interested in yeast datasets and
+the yeast cellular organizational units defined in the Bioconductor
+package \textit{ScISI} package and the KEGG pathways relevant to the
+yeast genome and available in the \textit{YEAST} annotation
+package. However our methods can easily be applied to other species
+and other estimates of organizational units within the genome, or
+proteome.
+
+The cellular organizational units should be represented as an
+adjacency matrix. The row names are the gene names and the column
+names the cellular organizational units. A 1 means that this
+particular gene belongs to this particular organizational units. Below
+is an example of yeast KEGG pathways. The \textit{org.Sc.sgd.db}
+annotation package contains KEGG pathways annotation for the yeast
+genes and the \Rfunction{PWAmat}, available in the \Rpackage{annotate}
+package, allows to build the adjacency matrix.
+
+<<KEGG>>=
+library(org.Sc.sgd.db) ## new YEAST annotation package
+##library(annotate)
+KeggMat <- PWAmat("org.Sc.sgd") 
+KeggMat[1:5, 1:5]
+@ 
+
+To build such interactome for a particular species, one should first
+have an annotation package for its species of interest. For instance,
+one can create this annotation package using the Bioconductor package
+\textit{AnnBuilder} which retrieves, among other annotation, the KEGG
+pathways associated with the genome of interest. For protein
+complexes, it might be slightly more complicated but one can use the
+GO categories that refer to complexes and create a similar binary
+matrix. In the case of the yeast genome, we use the interactome
+available in the Bioconductor package \textit{ScISI}.
+
+The \Rpackage{ScISI} package or \textit{In Silico Interactome for
+  Saccharomyces cerevisiae} provides an interactome built for
+computational experimentation.  The \Robject{ScISI} is binary
+incidence matrix where the rows are indexed by the gene locus names
+and the columns are indexed by the identification codes for the
+protein complexes based on the repository from where they are
+obtained. This interactome is currently built from the Intact, Gene
+Ontology and Mips curated databases, and estimated protein complexes
+from the \Rpackage{apComplex} package. In this vignette, we will make
+use of a subset of the \Robject{ScISI} interactome, the \Robject{ScISIC}
+data, that only contains the data from the curated databases.
+
+<<ScISI>>=
+library(ScISI)
+data(ScISIC)
+ScISIC[1:5, 1:5]
+@ 
+\section{Computational and Statistical Methods}
+In order to test for association between 2 datasets or 2 phenomenon,
+one has to define a null hypothesis. In our case, our null hypothesis
+is that there is no association between the collection of genes that
+induce the phenotypic change and the organizational units
+(\textit{e.g.}, multi-protein complexes, pathways).  To test this
+hypothesis we consider a multi-faceted approach.
+
+First, for any level of organization, we use a hypothesis test
+designed to determine whether there is an effect that can be
+attributed to that specific groupings of genes, without testing which
+cellular organizational units are involved.  
+Then, if we reject the null hypothesis of no association between the
+collection of genes that induce the phenotypic change and the
+organizational units, the next step is to identify those specific
+organizational units.
+ 
+\subsection{Global testing}
+We currently have devised two different methods of performing the
+omnibus test.  One test is based on density estimation
+\citep{Silverman} and provides valuable visual information, but for
+which we do not have an explicit $P$-value.  The second approach is
+based on the permutation of graphs \citep{Balasubramanian2004} and
+while it provides an explicit $P$-value, it provides little insight
+into the reasons for rejecting, or not, the hypothesis. See below for
+more details.
+
+\subsubsection{Density Estimation}
+For each cellular organizational unit, we compute the proportion of
+genes that affect the phenotype. We then compute the smoothed
+histogram of the proportions and compare it to a reference
+distribution. Our reference distribution is obtained by randomly
+permuting 1,000 times the gene labels for the interactome and
+computing, for each permutation, the new (simulated) proportions of
+genes that affects the phenotype and the associated smoothed
+histograms.\newline
+
+As example, we test whether the genes sensitive to paraquat in the
+\cite{Dudley2005} experiment are randomly distributed among
+multi-protein complexes.
+
+<<>>=
+perm <- 10 
+paraquat <- DudleyPhenoL[["Paraq"]]
+parDensity <- densityEstimate(genename=paraquat, interactome=ScISIC, perm=perm) 
+@ 
+
+Then, we can visualize the result of this test using the \Rfunction{plot} function.
+
+\begin{figure}[htbp]
+\centering
+<<fig=TRUE, prefix=TRUE>>=
+plot(parDensity, main="Effect of paraquat on S. cerevisiae genes")
+@ 
+\caption{\label{fig:Figure001-densityEstimate}\textbf{Genes sensitive
+    to paraquat are not well represented in our interactome.} A high
+  frequency of protein complexes have zero "paraquat-sensitive" genes.
+  Grey lines represent the permutation data and the black line is the observed data.}
+\end{figure}
+
+
+\subsubsection{Graph Theory}
+The graph theory procedure is based on the permutation of graphs
+proposed by \cite{Balasubramanian2004}. Two distinct graphs, $G_i =
+(V, E_i)$, $i=1,2$, are formed.  The nodes, $V$, are in our case the
+\textit{S. cerevisiae} genes, and they are common to both graphs.  In
+one graph $G_1$ two proteins have an edge between them if, and only
+if, they are co-members of one, or more, cellular organizational
+units.  In the second graph $G_2$ edges are created between all
+proteins that are associated with a phenotype of interest, so that if
+there are $k$ genes associated with the phenotype of interest then
+there is $k(k-1)/2$ edges.  We exclude self-loops in both graphs.  We
+then compute the intersection of these two graphs and count the
+edges in common.  To test whether the number of edges in
+the third graph is unexpectedly large, a permutation analysis is
+performed.  A reference distribution is computed by permuting $n$
+times the labels on either $G_1$ or $G_2$ and counting the number of
+edges in common obtained.  A $p$-value can be obtained by comparing
+the observed test statistic to the observed distribution of the counts
+of intersecting edges from the permutations.
+
+<<>>=
+parGraph <- graphTheory(genename=paraquat, interactome=ScISIC, perm=perm) 
+@ 
+
+Then, we can visualize the result of this test using the
+\Rfunction{plot} function.
+
+\begin{figure}[htbp]
+\centering
+<<fig=TRUE, prefix=TRUE>>=
+plot(parGraph, main="Effect of paraquat S. cerevisiae genes")
+@ 
+\caption{\label{fig:Figure001-densityEstimate}\textbf{Genes sensitive
+    to paraquat are not randomly distributed in our interactome.} The
+  "paraquat-sensitive" genes gather among complexes more than expected by chance.
+  the grey histogram represent the observed distributions and the red
+  dashed line the observed data.}
+\end{figure}
+
+\subsection{Hypergeometric Test}
+%%\subsubsection{Hypergeometric Test}
+A Hypergeometric test can be used to assess whether a cellular
+organizational unit contains more genes that affect the phenotype than
+expected by chance.  We rank the multi-protein complexes by their
+$p$-value and classify a complex as being associated with the
+phenotype if the Hypergeometric $p$-value was less than a threshold,
+\textit{e.g.,} $0.01$.  The Hypergeometric test is the equivalent of
+Fisher's exact test for two-by-two tables and the function repot the
+$p$-value, expected values and odds ratio for all tests.
+
+<<>>=
+params <- new("CoHyperGParams",
+              geneIds=paraquat, 
+              universeGeneIds=rownames(ScISIC),
+              annotation="org.Sc.sgd",
+              categoryName="ScISIC",
+              pvalueCutoff=0.01,
+              testDirection="over")
+
+paraquat.complex <- hyperGTest(params)
+@
+
+We can display the results using the \Rfunction{summary} function
+(Note that for visualization purposes we only show the first 6 columns).
+
+<<>>=
+summary(paraquat.complex)[,1:6]
+@ 
+
+Finally, you can classify the complexes as significant or not and annotate them if they are a GO, MIPS or KEGG term.
+
+<<>>= 
+status <- complexStatus(data=paraquat.complex,
+                              phenotype=paraquat,
+                              interactome=ScISIC, threshold=0.01)
+
+descr <- getDescr(status$A, database= c("GO","MIPS"))
+
+data.frame( descr,"pvalues"=paraquat.complex@pvalues[status$A])
+@ 
+
+Those results are in concordance with the known effect of paraquat on
+H+-transporting.  Indeed, the mechanisms of the toxic effects of
+paraquat are largely the result of a metabolically catalyzed
+single-electron reduction-oxidation reaction, resulting in depletion
+of cellular NADPH and the generation of potentially toxic forms of
+oxygen such as the superoxide radical. It also highlight the critical
+role of the ESCRT complexes (Endosomal Sorting Complex Required for Transport).
+
+
+\section{Conclusion}
+This package offers computational methods and statistical paradigms to
+explore the relationships between phenotype and cellular
+organizational units. We demonstrated its usefulness in \textit{S.
+  cerevisiae} using \cite{Dudley2005} dataset and multi-protein
+complexes. While this is one example, we believe that those approaches
+are powerful enough to investigate many other phenotypes and
+estimates of organizational units within the genome, or proteome.
+
+
+\bibliographystyle{plainnat}
+\bibliography{reference}
+\end{document}
