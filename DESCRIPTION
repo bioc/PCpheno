@@ -1,12 +1,13 @@
 Package: PCpheno
 Type: Package
 Title: Phenotypes and cellular organizational units
-Version: 1.1.5
+Version: 1.1.6
 Author: Nolwenn Le Meur and Robert Gentleman
 Description: Tools to integrate, annotate, and link phenotypes to cellular organizational units such as protein complexes and pathways.
 biocViews: ProteinInteraction
-Depends: ScISI (>= 1.3.0), SLGI, ppiStats, ppiData, Category, methods, KEGG
-Imports: Category, methods, annotate 	
+Depends: ScISI (>= 1.3.0), SLGI, ppiStats, ppiData, Category, methods,
+KEGG, org.Sc.sgd.db
+Imports: Category, methods, annotate (>= 1.17.4)	
 Maintainer: Nolwenn Le Meur <nlemeur@fhcrc.org>
 License: The Artistic License, Version 2.0
 biocViews: GraphsAndNetworks, Proteomics
