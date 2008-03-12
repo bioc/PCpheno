@@ -27,7 +27,8 @@ KEGG2SCISI(pw, pc, pcMat, pwMat)
 }
 \examples{
 data(ScISIC)
-KeggMat <- PWAmat("YEAST")
+## Mapping from Yeast genes to KEGG pathways.
+KeggMat <- PWAmat("org.Sc.sgd")
 KEGG2SCISI(pw = colnames(KeggMat)[1:5], pc = colnames(ScISIC)[1:5], pwMat =
 KeggMat, pcMat =ScISIC)
 }
