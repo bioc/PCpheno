@@ -10,8 +10,8 @@ getDescr <- function(x, database="GO"){
     names(Descr) <- x
     if(any(database == "KEGG")){
         if(length(x)>0){
-            if(require("KEGG", character.only=TRUE,quietly=TRUE))
-            kegg <- mget(x, env=KEGGPATHID2NAME, ifnotfound=NA)            
+            if(require("KEGG.db", character.only=TRUE,quietly=TRUE))
+            kegg <- mget(x, KEGGPATHID2NAME, ifnotfound=NA)            
             Descr[x] <- unlist(kegg)
         }
     }
@@ -19,7 +19,11 @@ getDescr <- function(x, database="GO"){
     if(any(database == "GO")){
         GOtermX <- grep("GO", x)
         if(length(GOtermX)>0){
-            termsGO <-unlist(getGOTerm(x[GOtermX]))
+            if(require("GO.db"))    
+            gocomplex = x[GOtermX]
+            xx = as.list(GOTERM)
+            annot =  xx[gocomplex]
+            termsGO = sapply(annot, function(x) if(!is.null(x)){Term(x)}else{NA})
             Descr[GOtermX] <- termsGO
         }
     }

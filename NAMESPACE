@@ -3,18 +3,19 @@ import("Category")
 
 importFrom("graphics", "plot", "lines", "hist")
 importFrom("annotate", "getGOTerm")
+importFrom("AnnotationDbi","as.list", "mget")
 
-export(graphTheory,
-       overlap,
-       complexStatus,
-       buildFDMat,
-       getFDgene,
-       reduceM,
-       densityEstimate,
-       truncName,
-       getDescr,
-       KEGG2SCISI,
-       ppiInteract)
+export("graphTheory",
+       "overlap",
+       "complexStatus",
+       "buildFDMat",
+       "getFDgene",
+       "reduceM",
+       "densityEstimate",
+       "truncName",
+       "getDescr",
+       "KEGG2SCISI",
+       "ppiInteract")
 
 exportClasses("CoHyperGParams",
               "CoHyperGResult",
