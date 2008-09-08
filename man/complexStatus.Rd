@@ -46,7 +46,7 @@ essential <- names(essglist)
 CoparamsESS <- new("CoHyperGParams",
                    geneIds=essential, 
                    universeGeneIds=rownames(ScISI),
-                   annotation="YEAST",
+                   annotation="org.sc.sgd.db",
                    categoryName="ScISI",
                    pvalueCutoff=0.01,
                    testDirection="over")

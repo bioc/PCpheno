@@ -4,11 +4,11 @@
 ## Functions to complete cellular organizational units annotation  
 ## ---------------------------------------------------------------------------
 
-getDescr <- function(x, database="GO"){
+getDescr <- function(x, database="GO.db"){
     
     Descr <- vector(length=length(x))
     names(Descr) <- x
-    if(any(database == "KEGG")){
+    if(any(database == "KEGG.db")){
         if(length(x)>0){
             if(require("KEGG.db", character.only=TRUE,quietly=TRUE))
             kegg <- mget(x, KEGGPATHID2NAME, ifnotfound=NA)            
@@ -16,7 +16,7 @@ getDescr <- function(x, database="GO"){
         }
     }
     
-    if(any(database == "GO")){
+    if(any(database == "GO.db")){
         GOtermX <- grep("GO", x)
         if(length(GOtermX)>0){
             if(require("GO.db"))    

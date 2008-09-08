@@ -41,7 +41,7 @@ essential <- names(essglist)
 params <- new("CoHyperGParams",
               geneIds=essential, 
               universeGeneIds=rownames(ScISIC),
-              annotation="YEAST",
+              annotation="org.sc.sgd.db",
               categoryName="ScISIC",
               pvalueCutoff=0.01,
               testDirection="over")
