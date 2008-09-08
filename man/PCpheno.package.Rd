@@ -13,7 +13,7 @@ Linkage between Protein Complexes, Pathways, and Phenotypes
 \tabular{ll}{
 Package: \tab PCpheno\cr
 Type: \tab Package\cr
-Version: \tab 1.1.3\cr
+Version: \tab 1.2.1\cr
 Date: \tab 2006-03-09\cr
 License: \tab  The Artistic License, Version 2.0\cr
 }

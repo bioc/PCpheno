@@ -23,7 +23,7 @@ KEGG2SCISI(pw, pc, pcMat, pwMat)
 
 \author{N. LeMeur}
 \seealso{
-  \emph{ScISI} \emph{KEGG}
+  \emph{ScISI} \emph{KEGG.db}
 }
 \examples{
 data(ScISIC)
