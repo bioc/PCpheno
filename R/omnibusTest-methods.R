@@ -18,10 +18,11 @@ setMethod("plot",
             }
             
             
-            plot(density(a[!is.na(a)]), col=obs.col, ylim=ylim, main=main, ...)
+            plot(density(a[!is.na(a)]), type="n",  ylim=ylim, main=main, ...)
             for(i in 1:perm){
               lines(density(b[,i]), col= exp.col, type="l", pch=20)
-            }      
+            }
+            lines(density(a[!is.na(a)]), col=obs.col, ylim=ylim, main=main, ...)
           }
           )
 
