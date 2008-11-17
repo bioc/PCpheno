@@ -114,7 +114,7 @@ paraquat <- DudleyPhenoL[["Paraq"]]
 params <- new("CoHyperGParams",
               geneIds=paraquat, 
               universeGeneIds=rownames(ScISIC),
-              annotation="org.sc.sgd.db",
+              annotation="org.Sc.sgd.db",
               categoryName="ScISIC",
               pvalueCutoff=0.01,
               testDirection="over")
