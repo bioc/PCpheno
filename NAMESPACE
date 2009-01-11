@@ -1,9 +1,19 @@
 import("methods")
 import("Category")
 
-importFrom("graphics", "plot", "lines", "hist")
-importFrom("annotate", "getGOTerm")
+importMethodsFrom("AnnotationDbi", "Term")
+importMethodsFrom("Biobase", "annotation")
+importMethodsFrom("GSEABase", "geneIds")
+importMethodsFrom("graph", "intersection", "nodes",
+                  "numEdges", "ugraph")
+
 importFrom("AnnotationDbi","as.list", "mget")
+importFrom("Biobase", "listLen")
+importFrom("GO.db", "GOTERM")
+importFrom("KEGG.db", "KEGGPATHID2NAME")
+importFrom("ScISI", "getMipsInfo")
+importFrom("graphics", "hist", "lines", "plot")
+importFrom("stats", "binomial", "density", "glm")
 
 export("graphTheory",
        "overlap",
