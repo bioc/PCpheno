@@ -13,9 +13,10 @@ data(YEASTOHNOLOG)
   \code{YEASTOHNOLOG} is a dataframe of 551 paired genes. The first two
   columns are the ohnolog gene pairs (systematic gene names). The third
   column is an index (numeric) of the  rate of sequence evolution. The
-  last two columns define the chromosome location.}
-    
-  \details{
+  last two columns define the chromosome location.
+}
+\details{
+  \describe{
     \item{Gene1 Gene2}{Systematic gene names of the ohnolog pairs}
     \item{Ka}{Coefficient that represents the extent of non-synonymous sequence divergence between each
       ohnolog pairs (Yang and Nielsen, 2000). The highest is the coefficient
@@ -23,7 +24,7 @@ data(YEASTOHNOLOG)
     \item{ChrG1 ChrG2}{Chromosome location of the each element of a
       pair. Note that repeat of the same chromosome locations shared by
       a set of pairs define a block of duplication.}
-    
+  }
 }
 \source{
   Byrne,KP and Wolfe KH (2005), Table2 of supplementary information and
