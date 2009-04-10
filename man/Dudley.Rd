@@ -6,7 +6,7 @@
 \alias{DudleyPhenoM}
 \alias{Dudleyresult}
 \alias{DudleySign}
-\docType{data}
+
 \title{List of fitness defect score generated from Dudley et al 2005}
 \description{
   Dudley et al (2005) create a  collection of gene-deletion mutants to
@@ -14,7 +14,8 @@
   environmental conditions. This list is generated from a fitness
   analysis under 21 different experimental conditions.
  } 
- \usage{
+
+\usage{
 data(DudleyGenelist)
 data(DudleyPhenoFull)
 data(DudleyPhenoM)
@@ -79,7 +80,8 @@ data(DudleySign)
 \references{
   Aim\'ee Marie Dudley, Daniel Maarten Janse, Amos Tanay, Ron
   Shamir and George McDonald Church. (2005).A global view of pleiotropy
-  and phenotypically derived gene function in yeast. Molecular Systems Biology doi:10.1038/msb4100004  
+  and phenotypically derived gene function in yeast. \emph{Molecular Systems
+    Biology} doi:10.1038/msb4100004   
 }
 
 \author{N. LeMeur}
