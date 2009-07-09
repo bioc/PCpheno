@@ -15,7 +15,7 @@ data(LesageRaw)
    \code{LesageRaw} is a 5 column dataframe.
   
   \describe{ 
-    \item{SYSTEMATIC}{Systematic gene names. NOTE: All mutants are isogenic to BY4741 (MATa his3\u0394 leu2\u0394 met15\u0394 ura3\u0394) except anp1\u0394 and mnn9\u0394 that are isogenic to BY4742 (MAT\u03b1 his3\u0394 leu2\u0394 lys2\u0394 ura3\u0394).}
+    \item{SYSTEMATIC}{Systematic gene names. NOTE: All mutants are isogenic to BY4741 (MATa his3\\u0394 leu2\\u0394 met15\\u0394 ura3\\u0394) except anp1\\u0394 and mnn9\\u0394 that are isogenic to BY4742 (MAT\\u03b1 his3\\u0394 leu2\\u0394 lys2\\u0394 ura3\\u0394).}
     \item{COMMUN}{Commun gene names.}
     \item{CFW}{Mutants showing increased, decreased or wild type sensitivity to Calcofluor white are scored s, r, or wt, respectively.}
     \item{ChitinLevel}{Chitin level (nmole GlcNAc/mg dry weight).

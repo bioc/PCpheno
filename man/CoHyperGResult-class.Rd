@@ -25,7 +25,11 @@ Objects is created by calls to the funtion hyperGTest.
 	 \describe{
     \item{\code{pvalues}:}{\code{"numeric"} vector: the ordered
       p-values for each category term tested.}
-    \item{\code{geneCounts}:}{\code{"integer"} vector: for each
+    \item{\code{oddsRatios}:}{Object of class \code{"numeric"}
+          Odds ratio for each category term tested}
+     \item{\code{expectedCounts}:}{Object of class \code{"numeric"}
+       The expected number of genes for each  gene term tested}
+     \item{\code{geneCounts}:}{\code{"integer"} vector: for each
       category term tested, the number of genes from the gene set that
       are annotated at the term.}
     \item{\code{universeCounts}:}{\code{"integer"} vector: for
@@ -35,22 +39,9 @@ Objects is created by calls to the funtion hyperGTest.
         names of the list are category IDs.  Each element is a vector
         of gene IDs annotated at the given category ID and in the
         specified gene universe.}
-    \item{\code{annotation}:}{A string giving the name of the chip
-      annotation data package used.}
-    \item{\code{geneIds}:}{Object of class \code{"ANY"}: the input
-      vector of gene identifiers intersected with the universe of gene
-      identifiers used in the computation.  The class of this slot is
-      specified as \code{"ANY"} because gene IDs may be integer or
-      character vectors depending on the annotation package.}
-    \item{\code{testName}:}{A string identifying the testing method
-      used.}
-    \item{\code{pvalueCutoff}:}{Numeric value used a a p-value
-        cutoff.  Used by the \code{show} method to count number of
-        significant terms.
-      }
-    }
-  }
 
+   }
+}
 \section{Extends}{
 Class \code{"HyperGResultBase"}, directly.
 }
@@ -77,7 +68,6 @@ Class \code{"HyperGResultBase"}, directly.
         "HyperGResult")}: return an \code{"numeric"}
       vector: for each category term tested, the number of genes from
       the gene universe that are annotated at the term.}
-
  
   \item{geneIdUniverse}{\code{signature(r =
         "CoHyperGResult")}: return a list named by the
