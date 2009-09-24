@@ -27,7 +27,7 @@
 \author{N. LeMeur}
 
 \seealso{
-  \code{\link[PCpheno]{testResult}},\code{\link[PCpheno]{deResult}},\code{\link[PCpheno]{plot}}
+  \code{\link[PCpheno:testResult-class]{testResult}},\code{\link[PCpheno:deResult-class]{deResult}},\code{\link[PCpheno]{plot}}
 }
 \examples{
 ## apply a densityEstimate test 

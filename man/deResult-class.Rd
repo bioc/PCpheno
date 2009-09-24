@@ -29,7 +29,7 @@ Class \code{"\linkS4class{testResult}"}, directly.
 \author{N. LeMeur}
 
 \seealso{
-  \code{\link[PCpheno]{testResult}},\code{\link[PCpheno]{gtResult}},\code{\link[PCpheno]{densityEstimate}}, \code{\link[PCpheno]{plot}}
+  \code{\link[PCpheno:testResult-class]{testResult}},\code{\link[PCpheno:gtResult-class]{gtResult}},\code{\link[PCpheno]{densityEstimate}}, \code{\link[PCpheno]{plot}}
 }
 \examples{
 ## apply a densityEstimate test 

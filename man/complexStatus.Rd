@@ -22,7 +22,7 @@ complexStatus(data, phenotype, interactome, threshold=0.05)
    We form four distinct categories from A to D to characterize how a
    complex might be involved in a particular phenotype (according to
    the number of genes it contains and that are involved in a particular
-   phenotype - see also \link[PCpheno]{CoHyperG} function)
+   phenotype - see also \link[Category:hyperGTest]{hyperGTest} function)
 }
 \value{
   The returned value is a list with components:

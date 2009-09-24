@@ -90,7 +90,7 @@ Class \code{"HyperGResultBase"}, directly.
 \author{S. Falcon and N. LeMeur}
 
 \seealso{
-  \code{\link[category]{HyperGResultBase-class}}
+  \code{\link[Category]{HyperGResultBase-class}}
 }
 \examples{
 data(DudleyPhenoM)

@@ -25,6 +25,6 @@ No methods defined with class "testResult" in the signature.
 \author{N. LeMeur}
 
 \seealso{
-  \code{\link[PCpheno]{gtResult}},\code{\link[PCpheno]{deResult}}
+  \code{\link[PCpheno:gtResult-class]{gtResult}},\code{\link[PCpheno:deResult-class]{deResult}}
 }
 \keyword{classes}
