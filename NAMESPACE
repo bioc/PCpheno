@@ -1,18 +1,32 @@
 import("methods")
-import("Category")
 
-importMethodsFrom("AnnotationDbi", "Term")
+importMethodsFrom("AnnotationDbi", "as.list", "mget", "Term")
+
 importMethodsFrom("Biobase", "annotation")
-importMethodsFrom("GSEABase", "geneIds")
-importMethodsFrom("graph", "intersection", "nodes",
-                  "numEdges", "ugraph")
-
-importFrom("AnnotationDbi","as.list", "mget")
 importFrom("Biobase", "listLen")
+
+importClassesFrom("Category", "DatPkg", "HyperGParams",
+                  "HyperGResultBase")
+importMethodsFrom("Category", "categoryName",
+                  "categoryToEntrezBuilder", "expectedCounts",
+                  "geneCounts", "hyperGTest", "oddsRatios",
+                  "pvalueCutoff", "pvalues", "testDirection",
+                  "universeBuilder", "universeCounts")
+importFrom("Category", ".doHyperGTest")
+
 importFrom("GO.db", "GOTERM")
-importFrom("KEGG.db", "KEGGPATHID2NAME")
-importFrom("ScISI", "getMipsInfo")
+
+importMethodsFrom("graph", "intersection", "nodes", "numEdges",
+                  "ugraph")
+
 importFrom("graphics", "hist", "lines", "plot")
+
+importMethodsFrom("GSEABase", "geneIds")
+
+importFrom("KEGG.db", "KEGGPATHID2NAME")
+
+importFrom("ScISI", "getMipsInfo")
+
 importFrom("stats", "binomial", "density", "glm")
 
 export("graphTheory",
