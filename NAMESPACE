@@ -2,7 +2,7 @@ import("methods")
 
 importMethodsFrom("AnnotationDbi", "as.list", "mget", "Term")
 
-importMethodsFrom("BiocGenerics", "plot", "summary")
+importMethodsFrom("stats4", "plot", "summary")
 importMethodsFrom("Biobase", "annotation")
 importFrom("Biobase", "listLen")
 
