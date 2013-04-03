@@ -1,7 +1,7 @@
 Package: PCpheno
 Type: Package
 Title: Phenotypes and cellular organizational units
-Version: 1.21.0
+Version: 1.22.0
 Author: Nolwenn Le Meur and Robert Gentleman
 Description: Tools to integrate, annotate, and link phenotypes to cellular organizational units such as protein complexes and pathways.
 Depends: R (>= 2.10), Category, ScISI (>= 1.3.0), SLGI, ppiStats, ppiData, annotate (>= 1.17.4)
