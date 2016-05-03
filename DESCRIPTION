@@ -1,7 +1,7 @@
 Package: PCpheno
 Type: Package
 Title: Phenotypes and cellular organizational units
-Version: 1.33.0
+Version: 1.34.0
 Author: Nolwenn Le Meur and Robert Gentleman
 Description: Tools to integrate, annotate, and link phenotypes to
         cellular organizational units such as protein complexes and
