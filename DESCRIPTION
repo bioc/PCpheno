@@ -1,7 +1,7 @@
 Package: PCpheno
 Type: Package
 Title: Phenotypes and cellular organizational units
-Version: 1.53.0
+Version: 1.53.1
 Author: Nolwenn Le Meur and Robert Gentleman
 Description: Tools to integrate, annotate, and link phenotypes to
         cellular organizational units such as protein complexes and
@@ -14,3 +14,4 @@ Suggests: KEGG.db, GO.db, org.Sc.sgd.db
 Maintainer: Nolwenn Le Meur <nlemeur@gmail.com>
 License: Artistic-2.0
 biocViews: GraphAndNetwork, Proteomics, Network
+PackageStatus: Deprecated
